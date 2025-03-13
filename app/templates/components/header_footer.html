@@ -734,6 +734,41 @@
                 padding: 12px 20px;
             }
         }
+
+        /* Section Header Dropdown Styles */
+        .section-header-dropdown {
+            padding: 8px 16px;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .section-header-dropdown:hover {
+            background-color: rgba(33, 150, 243, 0.05);
+        }
+
+        .section-header-dropdown i.fa-chevron-down {
+            transition: transform 0.3s ease;
+        }
+
+        .section-header-dropdown.active i.fa-chevron-down {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .section-content.active {
+            max-height: 500px;
+        }
     </style>
 </head>
 <body>
@@ -820,24 +855,30 @@
                     </a>
                     <div class="custom-dropdown">
                         <div class="dropdown-inner">
-                            <a href="#" class="dropdown-item"><i class="fas fa-user me-2"></i>Profile</a>
+                            <a href="#" class="dropdown-item"><i class="fas fa-user me-2"></i>Login/Signup</a>
                             <a href="#" class="dropdown-item"><i class="fas fa-cog me-2"></i>Settings</a>
                             <div class="dropdown-divider"></div>
                             <div class="dropdown-section">
-                                <div class="section-header">
-                                    <i class="fas fa-project-diagram me-2"></i>Projects
+                                <div class="section-header-dropdown" data-section="projects">
+                                    <span><i class="fas fa-project-diagram me-2"></i>Projects</span>
+                                    <i class="fas fa-chevron-down"></i>
                                 </div>
-                                <a href="#" class="dropdown-item">Web Development</a>
-                                <a href="#" class="dropdown-item">Mobile Apps</a>
-                                <a href="#" class="dropdown-item">Design Work</a>
+                                <div class="section-content" id="projects-content">
+                                    <a href="#" class="dropdown-item">Web Development</a>
+                                    <a href="#" class="dropdown-item">Mobile Apps</a>
+                                    <a href="#" class="dropdown-item">Design Work</a>
+                                </div>
                             </div>
                             <div class="dropdown-section">
-                                <div class="section-header">
-                                    <i class="fas fa-tools me-2"></i>Services
+                                <div class="section-header-dropdown" data-section="services">
+                                    <span><i class="fas fa-tools me-2"></i>Services</span>
+                                    <i class="fas fa-chevron-down"></i>
                                 </div>
-                                <a href="#" class="dropdown-item">Consulting</a>
-                                <a href="#" class="dropdown-item">Development</a>
-                                <a href="#" class="dropdown-item">Design</a>
+                                <div class="section-content" id="services-content">
+                                    <a href="#" class="dropdown-item">Consulting</a>
+                                    <a href="#" class="dropdown-item">Development</a>
+                                    <a href="#" class="dropdown-item">Design</a>
+                                </div>
                             </div>
                             <div class="dropdown-divider"></div>
                             <a href="#" class="dropdown-item"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
@@ -970,6 +1011,30 @@
                         e.preventDefault();
                         section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                     }
+                });
+            });
+
+            // Add section header dropdown functionality
+            const sectionHeaders = document.querySelectorAll('.section-header-dropdown');
+            
+            sectionHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const section = header.dataset.section;
+                    const content = document.getElementById(`${section}-content`);
+                    
+                    // Toggle active class
+                    header.classList.toggle('active');
+                    content.classList.toggle('active');
+                    
+                    // Close other sections
+                    sectionHeaders.forEach(otherHeader => {
+                        if (otherHeader !== header) {
+                            const otherSection = otherHeader.dataset.section;
+                            const otherContent = document.getElementById(`${otherSection}-content`);
+                            otherHeader.classList.remove('active');
+                            otherContent.classList.remove('active');
+                        }
+                    });
                 });
             });
         });
