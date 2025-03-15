@@ -855,8 +855,15 @@
                     </a>
                     <div class="custom-dropdown">
                         <div class="dropdown-inner">
-                            <a href="#" class="dropdown-item"><i class="fas fa-user me-2"></i>Login/Signup</a>
+                            {% if user.is_authenticated %}
+                            <a href="register" class="dropdown-item"><i class="fas fa-user me-2"></i>{{ request.user.username }}</a>
+                            {% else %}
+                            <a href="login" class="dropdown-item"><i class="fas fa-user me-2"></i>Login/Signup</a>
+                            {% endif %}
+
+                            {% if user.is_authenticated %}
                             <a href="#" class="dropdown-item"><i class="fas fa-cog me-2"></i>Settings</a>
+                            {% endif %}
                             <div class="dropdown-divider"></div>
                             <div class="dropdown-section">
                                 <div class="section-header-dropdown" data-section="projects">
@@ -881,7 +888,7 @@
                                 </div>
                             </div>
                             <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
+                            <a href="logout" class="dropdown-item"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
                         </div>
                     </div>
                 </div>

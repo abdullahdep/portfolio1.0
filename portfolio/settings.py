@@ -39,7 +39,13 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "app", # Add the app to the installed apps
     "livereload",
+    "auth_app",# Add the auth_app to the installed apps
 ]
+
+# AUTHENTICATION_BACKENDS = [
+#     'django.contrib.auth.backends.ModelBackend',
+#     # 'accounts.backends.EmailAuthBackend',
+# ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
