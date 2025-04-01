@@ -2,3 +2,4 @@
 __pycache__/
 # Ignore the SQLite database
 db.sqlite3
+.vercel
