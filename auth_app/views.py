@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from django.contrib.auth import login, logout
 from .middlewares import auth, guest
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 
 @guest
@@ -30,7 +32,7 @@ def login_view(request):
         form = AuthenticationForm(initial=initial_data)
     return render(request, 'auth/login.html',{'form':form}) 
 
-@auth
+@login_required(login_url='login')
 def dashboard_view(request):
     return render(request, 'dashboard.html')
 
